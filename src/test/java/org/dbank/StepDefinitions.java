@@ -39,14 +39,16 @@ public class StepDefinitions {
     @Given("I GET the details for NACE {string}")
     public void iGETTheDetailsForNACE(String arg0) {
         response = get("http://localhost:1080/orders?order="+arg0).andReturn();
-
     }
 
-    @When("search is executed successfully")
+    @When("search is executed unsuccessfully")
     public void searchIsExecutedSuccessfully() {
+        assertThat(response.getStatusCode(),equalTo(404));
+    }
+    @When("search is executed successfully")
+    public void searchIsExecutedUnSuccessfully() {
         assertThat(response.getStatusCode(),equalTo(200));
     }
-
     @Then("I validate the NACE details for {string}")
     public void iValidateTheNACEDetailsFor(String arg0) {
         JsonPath jsonPath =  response.body().jsonPath();
